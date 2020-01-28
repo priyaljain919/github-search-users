@@ -1,1 +1,25 @@
-<p>home-list works!</p>
+<div class="wrapper">
+    <header class="header-wrapper">
+        <input type="text" name="search" #searchBox (keyup)="search(searchBox.value)" placeholder="Search here..." autocomplete="off" />
+
+        <ng-container *ngIf="searchBox.value.length>0; else searchBlock">
+            <div class="input-icon-wrapper" (click)="clearInput()">
+                <span class="fa fa-close"></span>
+            </div>
+        </ng-container>
+
+        <ng-template #searchBlock>
+            <div class="input-icon-wrapper">
+                <span class="fa fa-search"></span>
+            </div>
+        </ng-template>
+    </header>
+    <ng-container *ngIf="userData">
+        <div *ngFor="let item of userData | paginate: { itemsPerPage: 3, currentPage: p }">
+            <app-home-card [item]="userData"></app-home-card>
+        </div>
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    </ng-container>
+
+
+</div>
