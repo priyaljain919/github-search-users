@@ -1,25 +1,58 @@
 <div class="wrapper">
     <header class="header-wrapper">
-        <input type="text" name="search" #searchBox (keyup)="search(searchBox.value)" placeholder="Search here..." autocomplete="off" />
+        <div class="display-flex justify-content-center">
+            <div class="select-wrapper">
+                <select [(ngModel)]="selectedSortOption" (ngModelChange)="selectSortOption($event)">
+          <option *ngFor="let item of sortOptions" [value]="item.value">{{item.name}}</option>
+        </select>
+            </div>
+            <div class="input-wrapper">
 
-        <ng-container *ngIf="searchBox.value.length>0; else searchBlock">
-            <div class="input-icon-wrapper" (click)="clearInput()">
-                <span class="fa fa-close"></span>
+                <input [(ngModel)]="searchBar" type="text" placeholder="Search Github User" (input)="filterGlobal($event.target.value)">
+
+                <ng-template #searchBlock>
+                    <div class="input-icon-wrapper">
+                        <span class="fa fa-search"></span>
+                    </div>
+                </ng-template>
+            </div>
+
+        </div>
+
+
+    </header>
+    <ng-container *ngIf="!isDataLoading">
+        <ng-container *ngIf="usersList.length">
+            <div class="results-wrapper">
+                <p>
+                    <span class="results-heading">
+            Total Results:
+          </span>
+                    <span>
+            {{totalRecords}}
+          </span>
+                </p>
+            </div>
+            <div *ngFor="let item of usersList | paginate: { itemsPerPage: 30, currentPage: currentPage, totalItems: totalRecords }">
+
+                <app-home-card [userData]="item"></app-home-card>
+            </div>
+            <div class="pagination-wrapper">
+                <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
             </div>
         </ng-container>
 
-        <ng-template #searchBlock>
-            <div class="input-icon-wrapper">
-                <span class="fa fa-search"></span>
-            </div>
-        </ng-template>
-    </header>
-    <ng-container *ngIf="userData">
-        <div *ngFor="let item of userData | paginate: { itemsPerPage: 3, currentPage: p }">
-            <app-home-card [item]="userData"></app-home-card>
-        </div>
-        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        <ng-container *ngIf="usersList.length === 0">
+            No Data Found
+        </ng-container>
+
+
     </ng-container>
+
+    <div class="loader" *ngIf="isDataLoading">
+        <i class="fa fa-spinner" aria-hidden="true"></i>
+        <span>Loading...</span>
+    </div>
 
 
 </div>

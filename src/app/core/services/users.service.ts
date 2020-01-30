@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { retry, catchError, map } from 'rxjs/operators';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { BaseService } from './base.service';
+import { throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,30 +11,33 @@ import { BaseService } from './base.service';
 export class UsersService {
   subscribe: any;
   public commentListData: any;
-
-  public  username: string;
-
+  public username: string;
+  private _baseUrl: string;
   constructor(
     private http: HttpClient,
     private router: Router,
     private baseService: BaseService
   ) {
-    // this.baseUrl = this.baseService.base_url;
-    this.username = 'varun1505';
+    this._baseUrl = this.baseService.base_url;
   }
 
-
-  getAllUsers() {
-    return this.http.get('https://api.github.com/users/' + this.username + '/repos');
+  // get repos of a particular users
+  getUserRepo(data) {
+    return this.http.get('https://api.github.com/users/' + data + '/repos');
   }
 
+  // search users with pagination
   searchUsers(data) {
-    const params = {
-      q: data.searchString
-    };
+    const PARAMS = new HttpParams().set('q', data.searchTerm).set('page', data.page)
     return this.http
-      .get('https://api.github.com/users/' + {
-        params: params
-      })
+      .get(this._baseUrl + '/search/users', {
+        params: PARAMS
+      }).pipe(
+        retry(1),
+        catchError(error => {
+          return throwError(error);
+        })
+      )
   }
+
 }

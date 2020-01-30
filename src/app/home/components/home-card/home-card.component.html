@@ -1,45 +1,90 @@
-<div *ngIf="item">
+<div *ngIf="userData">
+    <!-- <div *ngFor="let item of userData"> -->
     <div class="card">
         <div class="display-flex justify-space-between">
             <div class="display-flex">
-                <div>
-                    <img src="{{item?.owner?.avatar_url}}" alt="">
+                <div class="list-image-wrapper">
+                    <img src="{{userData?.avatar_url}}" alt="">
                 </div>
                 <div>
-                    <p>Varun Srinivas</p>
+                    <p class="card-title">{{userData.login}}</p>
                     <div>
                         <span>
-                                    Profile Url:
-                                        </span>
+                Profile Url:
+              </span>
                         <span>
-                                            https://api.github.com
-                                        </span>
+                {{userData.url}}
+              </span>
                     </div>
                     <div>
                         <p>
                             <span>
-                                                        Data One:
-                                                    </span>
+                  Score:
+                </span>
                             <span>
-                                                        Value One
-                                                    </span>
+                  {{userData.score}}
+                </span>
                         </p>
                         <p>
                             <span>
-                                                        Data Two:
-                                                    </span>
+                  Type:
+                </span>
                             <span>
-                                                        Value Two
-                                                    </span>
+                  {{userData.type}}
+                </span>
                         </p>
                     </div>
                 </div>
             </div>
-            <div class="display-flex align-items-end">
-                <button type="button" class="button-wrapper">Details</button>
+            <div class="display-flex align-items-end" (click)="detailsEvent(userData)">
+                <button type="button" class="button-wrapper">
+            {{(userDataFlag) ? 'Collapse' : 'Details'}}
+          </button>
             </div>
+
         </div>
+        <ng-container *ngIf="userDataFlag; elseBlock">
+            <div class="scroll-wrapper">
+                <div *ngFor="let item of repoUserData" class="repo-background-wrapper">
+                    <div class="display-flex justify-space-between repo-card-wrapper">
+                        <div>
+                            <p>
+                                <span class="repo-heading">Repo Name:</span>
+                                <span class="repo-text">
+                    {{item.name}}
+                  </span>
+                            </p>
+                            <p>
+                                <span class="repo-heading">Issues Count:</span>
+                                <span class="repo-text">
+                    {{item.open_issues_count}}
+                  </span>
+                            </p>
+                            <p>
+                                <span class="repo-heading">Forks:</span>
+                                <span class="repo-text">
+                    {{item.forks}}
+                  </span>
+                            </p>
+                            <p>
+                                <span class="repo-heading">Watchers:</span>
+                                <span class="repo-text">
+                    {{item.watchers_count}}
+                  </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+        <ng-template #elseBlock>
+            <div class="no-data-found">
+                <p>No Data Found</p>
+            </div>
+        </ng-template>
 
     </div>
+    <!-- </div> -->
+
 
 </div>

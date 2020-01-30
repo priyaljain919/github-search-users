@@ -1,0 +1,24 @@
+::ng-deep .pagination-wrapper {
+    pagination-controls {
+        .ngx-pagination {
+            text-align: right;
+            max-width: 75%;
+            .current {
+                background: #0570c2;
+                border-radius: 4px;
+            }
+            button {
+                color: #616161;
+            }
+        }
+    }
+}
+
+.loader {
+    margin-top: 10em;
+    text-align: center;
+    span {
+        margin-left: 15px;
+        display: inline-block;
+    }
+}

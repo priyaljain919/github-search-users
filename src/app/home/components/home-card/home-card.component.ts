@@ -7,11 +7,11 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class HomeCardComponent implements OnInit {
 
-  @Input('item') item: any;
+  @Input('userData') userData: any;
   constructor() { }
 
   ngOnInit() {
-    console.log('item', this.item);
+    console.log('item', this.userData);
   }
 
 }
