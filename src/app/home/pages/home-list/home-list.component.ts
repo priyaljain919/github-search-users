@@ -60,7 +60,7 @@ export class HomeListComponent implements OnInit, OnDestroy {
         searchTerm: term
       }))
     ).subscribe((response: any) => {
-      console.log(response);
+     
       this.usersList = response.items;
       if (this.selectedSortOption !== 'default') {
         this.selectSortOption(this.selectedSortOption);

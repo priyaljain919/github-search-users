@@ -5,7 +5,7 @@
 .card {
     margin: 16px auto;
     background: white;
-    box-shadow: 2px 1px 5px grey;
+    box-shadow: 2px 1px 5px #dad7d7;
     max-width: 50%;
     padding: 10px 16px;
     &:first-child {
@@ -24,5 +24,29 @@
     img {
         width: 100%;
         border-radius: inherit;
+    }
+}
+
+.repo-card-wrapper {}
+
+.repo-background-wrapper {
+    margin-top: 16px;
+}
+
+.repo-background-wrapper:nth-child(odd) {
+    background: #f8f8f8;
+}
+
+.repo-background-wrapper:nth-child(even) {
+    background: #fff;
+}
+
+.repo-card-wrapper {
+    box-shadow: 0px 0px 5px #d5d3d3;
+    padding: 10px;
+    .repo-heading {
+        font-weight: 600;
+        color: #434343;
+        padding-right: 3px;
     }
 }
